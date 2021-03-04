@@ -4,17 +4,25 @@ import array as buf_array
 # import time
 # from LogFile import LogFile
 
-COMMAND_GET_STATE = 0x00
-COMMAND_START_CHARGING = 0x01
-COMMAND_STOP_CHARGING = 0x02
-COMMAND_CHANGE_CURRENT = 0x03
+
 
 
 class UartTerminal(object):
     def __init__(self):
-        self.index_print = 0
+        self.set_current = 0
+        self.real_current = 0
+        self.state = 0
         self.ComPort = None
-        self.set_current = 1128
+        # self.set_current = 1128
+
+    def get_set_current(self):
+        return self.set_current
+
+    def get_real_current(self):
+        return self.real_current
+
+    def get_state(self):
+        return self.state
 
     def open(self, com_port, baud_rate):
         # com_port = 'COM3'
@@ -30,27 +38,26 @@ class UartTerminal(object):
         print(self.ComPort.reset_output_buffer())
         return 0
 
-    def read_module(self):
-        self.send_data(0x03)  # send command to module
+    def read_module(self, command, current):
+        self.send_data(command, current)  # send command to module
         # time.sleep(0.1)
-        # read_line1 = self.ComPort.readline()
         read_data = self.ComPort.read(16)
         len_data = len(read_data)
-        set_current = read_data[1] + (read_data[2] << 8)
-        print(set_current)
-        print(read_data[0])
         if len_data == 0:  #
-            return 1, 'No main board'
+            return 1, read_data  # 'No answer'
 
+        self.state = read_data[0]
+        self.set_current = read_data[1] + (read_data[2] << 8)
+        self.real_current = read_data[1] + (read_data[2] << 8)
 
-        return 0, 'OK'
+        return 0, read_data  # 'OK'
 
-    def send_data(self, command):
+    def send_data(self, command, current):
         # self.set_current = 1128
         # command = 0x00
         buffer = buf_array.array('B', [command])
-        buffer.append(self.set_current & 0xFF)
-        buffer.append(self.set_current >> 8)
+        buffer.append(current & 0xFF)
+        buffer.append(current >> 8)
         for i in range(12):
             buffer.append(0)
 
@@ -61,6 +68,6 @@ class UartTerminal(object):
         buffer.append(crc)
         self.ComPort.write(buffer)  # send command to module
 
-        print(buffer)
-        print(len(buffer))
+        # print(buffer)
+        # print(len(buffer))
 
