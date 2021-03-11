@@ -7,8 +7,11 @@ from LogFile import LogFile
 EVSE_CMD_GET_STATE = 0x00
 EVSE_CMD_START_SELFTEST = 0x01
 EVSE_CMD_SET_STANDBY = 0x02
-EVSE_CMD_UPDATE_CURRENT = 0x03
-EVSE_CMD_DISABLE = 0x04
+EVSE_CMD_ENABLE_CHARGING = 0x03
+EVSE_CMD_DISABLE_CHARGING = 0x04
+EVSE_CMD_UPDATE_CURRENT = 0x05
+EVSE_CMD_SET_MAX_CURRENT = 0x06
+EVSE_CMD_DISABLE = 0x07
 
 EVSE_STATE_SELFTEST = 0x00
 IFC_EVSE_STATE_STANDBY = 0x01
@@ -77,6 +80,11 @@ if __name__ == '__main__':
         time.sleep(0.1)
 
     print("SELF_TEST - OK")
+    result, read_data = uartTerminal.read_module(EVSE_CMD_SET_MAX_CURRENT, 20)  # Set max current 20A
+    if result > 0:
+        print("No answer")
+        sys.exit(5)
+
     result, read_data = uartTerminal.read_module(EVSE_CMD_SET_STANDBY, 20)  # Standby, current 20A
     if result > 0:
         print("No answer")
@@ -97,8 +105,8 @@ if __name__ == '__main__':
         # print(evse_set_current)
         # print(evse_real_current)
 
-        log_file = LogFile()
-        log_file.write_record(read_data)
+        # log_file = LogFile()
+        # log_file.write_record(read_data)
 
         if evse_state == IFC_EVSE_STATE_STANDBY:
             if cur_evse_state != evse_state:
