@@ -7,8 +7,11 @@ from LogFile import LogFile
 EVSE_CMD_GET_STATE = 0x00
 EVSE_CMD_START_SELFTEST = 0x01
 EVSE_CMD_SET_STANDBY = 0x02
-EVSE_CMD_UPDATE_CURRENT = 0x03
-EVSE_CMD_DISABLE = 0x04
+EVSE_CMD_ENABLE_CHARGING = 0x03
+EVSE_CMD_DISABLE_CHARGING = 0x04
+EVSE_CMD_UPDATE_CURRENT = 0x05
+EVSE_CMD_SET_MAX_CURRENT = 0x06
+EVSE_CMD_DISABLE = 0x07
 
 EVSE_STATE_SELFTEST = 0x00
 IFC_EVSE_STATE_STANDBY = 0x01
@@ -28,7 +31,7 @@ if __name__ == '__main__':
     # sys.exit(0)
 
     uartTerminal = UartTerminal()
-    if uartTerminal.open('COM5', 115200) != 0:
+    if uartTerminal.open('COM4', 115200) != 0:
         sys.exit(1)
 
     time.sleep(0.2)
@@ -77,7 +80,12 @@ if __name__ == '__main__':
         time.sleep(0.1)
 
     print("SELF_TEST - OK")
-    result, read_data = uartTerminal.read_module(EVSE_CMD_SET_STANDBY, 2000)  # Standby, current 20A
+    result, read_data = uartTerminal.read_module(EVSE_CMD_SET_MAX_CURRENT, 20)  # Set max current 20A
+    if result > 0:
+        print("No answer")
+        sys.exit(5)
+
+    result, read_data = uartTerminal.read_module(EVSE_CMD_SET_STANDBY, 20)  # Standby, current 20A
     if result > 0:
         print("No answer")
         sys.exit(5)
@@ -93,12 +101,12 @@ if __name__ == '__main__':
         evse_state = uartTerminal.get_state()
         evse_set_current = uartTerminal.get_set_current()
         evse_real_current = uartTerminal.get_real_current()
-        # print(evse_state)
+        print(evse_state)
         # print(evse_set_current)
         # print(evse_real_current)
 
-        log_file = LogFile()
-        log_file.write_record(read_data)
+        # log_file = LogFile()
+        # log_file.write_record(read_data)
 
         if evse_state == IFC_EVSE_STATE_STANDBY:
             if cur_evse_state != evse_state:
@@ -132,10 +140,10 @@ if __name__ == '__main__':
 
         # if evse_state == EVSE_STATE_ERROR
         if cur_evse_state != evse_state:
-            print("ERROR")
+            print("ERRO")
             cur_evse_state = evse_state
 
-        # result, read_data = uartTerminal.read_module(EVSE_CMD_DISABLE, 0)
-        # if result > 0:
-        #    print("No answer")
-        #    sys.exit(6)
+        result, read_data = uartTerminal.read_module(EVSE_CMD_DISABLE, 0)
+        if result > 0:
+            print("No answer")
+            sys.exit(6)
