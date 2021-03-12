@@ -5,8 +5,6 @@ import array as buf_array
 # from LogFile import LogFile
 
 
-
-
 class UartTerminal(object):
     def __init__(self):
         self.set_current = 0

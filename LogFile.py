@@ -12,7 +12,7 @@ class LogFile(object):
 
     def write_record(self, record):
         datetime_object = datetime.datetime.now()
-        print(datetime_object)
+        # print(datetime_object)
         today = datetime_object.strftime("%m/%d/%Y-%H:%M:%S.%f-")
 
         try:
@@ -27,7 +27,7 @@ class LogFile(object):
             # str_temp = record.decode()
             # full_record = today + record.replace('temp from '.encode(), '')
             # full_record = today + str_temp
-            print(full_record)
+            # print(full_record)
         except:
             print("ERROR record")
             return

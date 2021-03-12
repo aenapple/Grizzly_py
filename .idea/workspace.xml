@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93792254-8c8e-4e2b-b558-aa4ae48a761d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/LogFile.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Grizzly.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Grizzly.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Grizzly.py" beforeDir="false" afterPath="$PROJECT_DIR$/Grizzly.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogFile.py" beforeDir="false" afterPath="$PROJECT_DIR$/LogFile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UartTerminal.py" beforeDir="false" afterPath="$PROJECT_DIR$/UartTerminal.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +28,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Xilinx_2018/LxbApplicationMaster/py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -35,7 +37,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.Parser">
+  <component name="RunManager" selected="Python.Grizzly">
     <configuration name="Grizzly" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Grizzly" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -82,8 +84,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Parser" />
         <item itemvalue="Python.Grizzly" />
+        <item itemvalue="Python.Parser" />
       </list>
     </recent_temporary>
   </component>
@@ -102,6 +104,10 @@
       <workItem from="1614874993567" duration="12681000" />
       <workItem from="1614955578878" duration="1337000" />
       <workItem from="1614968192886" duration="11522000" />
+      <workItem from="1615221216105" duration="84000" />
+      <workItem from="1615222706836" duration="517000" />
+      <workItem from="1615226118983" duration="1659000" />
+      <workItem from="1615324675683" duration="5469000" />
     </task>
     <servers />
   </component>
@@ -132,7 +138,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Grizzly$Grizzly.coverage" NAME="Grizzly Coverage Results" MODIFIED="1614978681601" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Grizzly$Parser.coverage" NAME="Parser Coverage Results" MODIFIED="1614982521074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Grizzly$Grizzly.coverage" NAME="Grizzly Coverage Results" MODIFIED="1615330069495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
