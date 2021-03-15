@@ -31,7 +31,7 @@ if __name__ == '__main__':
     # sys.exit(0)
 
     uartTerminal = UartTerminal()
-    if uartTerminal.open('COM4', 115200) != 0:
+    if uartTerminal.open('COM5', 115200) != 0:
         sys.exit(1)
 
     time.sleep(0.2)
@@ -80,12 +80,12 @@ if __name__ == '__main__':
         time.sleep(0.1)
 
     print("SELF_TEST - OK")
-    result, read_data = uartTerminal.read_module(EVSE_CMD_SET_MAX_CURRENT, 20)  # Set max current 20A
+    result, read_data = uartTerminal.read_module(EVSE_CMD_SET_MAX_CURRENT, 2000)  # Set max current 20A
     if result > 0:
         print("No answer")
         sys.exit(5)
 
-    result, read_data = uartTerminal.read_module(EVSE_CMD_SET_STANDBY, 20)  # Standby, current 20A
+    result, read_data = uartTerminal.read_module(EVSE_CMD_SET_STANDBY, 2000)  # Standby, current 20A
     if result > 0:
         print("No answer")
         sys.exit(5)
