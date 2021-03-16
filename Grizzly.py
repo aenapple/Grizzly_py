@@ -111,8 +111,8 @@ if __name__ == '__main__':
         # print(evse_set_current)
         # print(evse_real_current)
 
-        # log_file = LogFile()
-        # log_file.write_record(read_data)
+        log_file = LogFile()
+        log_file.write_record(read_data)
         # if timer > 60:
         #    print("END WRITING")
         #    sys.exit(6)
