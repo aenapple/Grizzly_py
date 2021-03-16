@@ -40,16 +40,16 @@ class EvseData(object):
         t_array = []
         s_array = []
 
-        str_temp = '21-'
-        file_input = open('LogEvse.txt', 'r')
+        file_input = open('LogEvse_WorkingCycle_2.txt', 'r')
         # file_csv = open('LogTemperature_' + hex(number_module).replace('0x', '') + '.csv', 'w')
         for line in file_input:
             # file_csv.write(line[0:10] + ',')
-            str_record = line.replace(line[0:11], '')  # remove Date
-            seconds_tmp = int(str_record[6:8]) + (int(str_record[3:5]) * 60) + (int(str_record[0:2]) * 3600)
+            str_record_sec = line.replace(line[0:11], '')  # remove Date
+            seconds_tmp = int(str_record_sec[6:8]) + (int(str_record_sec[3:5]) * 60) + (int(str_record_sec[0:2]) * 3600)
             self.seconds.append(seconds_tmp)
 
             str_record = line.replace(line[0:27], '')  # remove Date and Time
+            # print(str_record)
             for i in range(7):
                 pos = str_record.find(',')
                 if i == 0:
@@ -74,7 +74,7 @@ class EvseData(object):
                     diode = int(str_record[0:pos])
                     self.diode.append(diode)
 
-                str_record = str_record.replace(str_record[0:pos + 1], '')
+                str_record = str_record.replace(str_record[0:pos + 1], '', 1)
 
         # file_csv.write(str(seconds) + ',')
         # t_array.append(t)
