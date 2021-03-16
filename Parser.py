@@ -40,13 +40,17 @@ class EvseData(object):
         t_array = []
         s_array = []
 
-        file_input = open('LogFiles/LogEvse_WorkingCycle_2.txt', 'r')
+        file_input = open('LogEvse.txt', 'r')
         # file_csv = open('LogTemperature_' + hex(number_module).replace('0x', '') + '.csv', 'w')
+        flag_first_line = True
         for line in file_input:
             # file_csv.write(line[0:10] + ',')
             str_record_sec = line.replace(line[0:11], '')  # remove Date
             seconds_tmp = int(str_record_sec[6:8]) + (int(str_record_sec[3:5]) * 60) + (int(str_record_sec[0:2]) * 3600)
-            self.seconds.append(seconds_tmp)
+            if flag_first_line:
+                seconds_start = seconds_tmp
+                flag_first_line = False
+            self.seconds.append(seconds_tmp - seconds_start)
 
             str_record = line.replace(line[0:27], '')  # remove Date and Time
             # print(str_record)
