@@ -5,6 +5,7 @@ class EvseCurrent(object):
     def __init__(self):
         self.iac = []
         self.gfci = []
+        self.seconds = []
 
     def get_iac(self):
         return self.iac
@@ -12,8 +13,11 @@ class EvseCurrent(object):
     def get_gfci(self):
         return self.gfci
 
+    def get_seconds(self):
+        return self.seconds
+
     def transform_data(self):
-        file_input = open('LogEvse.txt', 'r')
+        file_input = open('LogFiles/LogEvse_WorkingCycle_2.txt', 'r')
         flag_first_line = True
         for line in file_input:
             str_record = line.replace(line[0:11], '')  # remove Date
@@ -21,6 +25,7 @@ class EvseCurrent(object):
             if flag_first_line:
                 seconds_start = seconds_tmp
                 flag_first_line = False
+            # seconds_tmp = seconds_tmp - seconds_start
             self.seconds.append(seconds_tmp - seconds_start)
 
             str_record = line.replace(line[0:27], '')  # remove Date and Time
@@ -28,7 +33,7 @@ class EvseCurrent(object):
                 pos = str_record.find(',')
                 if i == 3:
                     iac = int(str_record[0:pos])
-                    self.iac.append(iac)
+                    self.iac.append(iac * 61)
                 if i == 4:
                     gfci = int(str_record[0:pos])
                     self.gfci.append(gfci)
@@ -53,7 +58,7 @@ if __name__ == '__main__':
 
     evse_current = EvseCurrent()
     evse_current.transform_data()
-    plt.ylim(0, 30000)
+    plt.ylim(0, 50000)
     ax.plot(evse_current.get_seconds(), evse_current.get_iac(), label="Iac")
     ax.plot(evse_current.get_seconds(), evse_current.get_gfci(), label="Gfci")
 

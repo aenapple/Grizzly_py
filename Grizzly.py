@@ -96,7 +96,7 @@ if __name__ == '__main__':
         sys.exit(5)
 
     cur_evse_state = EVSE_STATE_DISABLED
-    # timer = 0
+    timer = 0
     while True:
         time.sleep(1.0)
         result, read_data = uartTerminal.read_module(EVSE_CMD_GET_STATE, 0)
