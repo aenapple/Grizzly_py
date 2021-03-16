@@ -17,7 +17,7 @@ class EvseCurrent(object):
         return self.seconds
 
     def transform_data(self):
-        file_input = open('LogFiles/LogEvse_WorkingCycle_2.txt', 'r')
+        file_input = open('LogFiles/LogEvse_CarCycle_1.txt', 'r')
         flag_first_line = True
         for line in file_input:
             str_record = line.replace(line[0:11], '')  # remove Date
@@ -33,7 +33,7 @@ class EvseCurrent(object):
                 pos = str_record.find(',')
                 if i == 3:
                     iac = int(str_record[0:pos])
-                    self.iac.append(iac * 61)
+                    self.iac.append(iac)
                 if i == 4:
                     gfci = int(str_record[0:pos])
                     self.gfci.append(gfci)

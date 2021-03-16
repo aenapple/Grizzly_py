@@ -114,26 +114,27 @@ if __name__ == '__main__':
         # print(evse_set_current)
         print(evse_real_current)
 
-        log_file = LogFile()
-        log_file.write_record(read_data)
+        # log_file = LogFile()
+        # log_file.write_record(read_data)
 
-        if timer == 10:
+        if timer == 5:
             result, read_data = uartTerminal.read_module(EVSE_CMD_UPDATE_CURRENT, 1000)  # set current 10A
             if result > 0:
                 print("No answer")
                 sys.exit(5)
             else:
-                timer += 1
                 print("Set 10A")
 
-        if timer == 20:
+        if timer == 10:
             result, read_data = uartTerminal.read_module(EVSE_CMD_UPDATE_CURRENT, 2000)  # set current 20A
             if result > 0:
                 print("No answer")
                 sys.exit(5)
             else:
-                timer += 1
                 print("Set 20A")
+                timer = 0
+
+        timer += 1
 
         if evse_state == IFC_EVSE_STATE_STANDBY:
             if cur_evse_state != evse_state:
