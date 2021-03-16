@@ -46,7 +46,8 @@ class UartTerminal(object):
 
         self.state = read_data[0]
         self.set_current = read_data[1] + (read_data[2] << 8)
-        self.real_current = read_data[1] + (read_data[2] << 8)
+        # self.real_current = read_data[1] + (read_data[2] << 8)
+        self.real_current = read_data[6] + (read_data[7] << 8)
 
         return 0, read_data  # 'OK'
 
