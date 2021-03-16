@@ -40,7 +40,7 @@ class EvseData(object):
         t_array = []
         s_array = []
 
-        file_input = open('LogEvse_WorkingCycle_2.txt', 'r')
+        file_input = open('LogFiles/LogEvse_WorkingCycle_2.txt', 'r')
         # file_csv = open('LogTemperature_' + hex(number_module).replace('0x', '') + '.csv', 'w')
         for line in file_input:
             # file_csv.write(line[0:10] + ',')
