@@ -100,8 +100,8 @@ if __name__ == '__main__':
     cur_evse_state = EVSE_STATE_DISABLED
     timer = 0
     while True:
-        time.sleep(1.0)
-        # time.sleep(60.0)  # 1 minute
+        # time.sleep(1.0)
+        time.sleep(60.0)  # 1 minute
         result, read_data = uartTerminal.read_module(EVSE_CMD_GET_STATE, 0)
         if result > 0:
             print("No answer")
@@ -114,8 +114,8 @@ if __name__ == '__main__':
         # print(evse_set_current)
         print(evse_real_current)
 
-        # log_file = LogFile()
-        # log_file.write_record(read_data)
+        log_file = LogFile()
+        log_file.write_record(read_data)
 
         if timer == 5:
             result, read_data = uartTerminal.read_module(EVSE_CMD_UPDATE_CURRENT, 1000)  # set current 10A
