@@ -17,7 +17,7 @@ class EvseCurrent(object):
         return self.seconds
 
     def transform_data(self):
-        file_input = open('LogFiles/LogEvse_CarCycle_1.txt', 'r')
+        file_input = open('LogFiles/LogEvse_CarCycle_2.txt', 'r')
         flag_first_line = True
         for line in file_input:
             str_record = line.replace(line[0:11], '')  # remove Date
