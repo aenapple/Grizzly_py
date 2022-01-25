@@ -10,6 +10,7 @@ class UartTerminal(object):
         self.set_current = 0
         self.real_current = 0
         self.state = 0
+        self.error = 0
         self.ComPort = None
         # self.set_current = 1128
 
@@ -21,6 +22,9 @@ class UartTerminal(object):
 
     def get_state(self):
         return self.state
+
+    def get_error(self):
+        return self.error
 
     def open(self, com_port, baud_rate):
         # com_port = 'COM3'
@@ -45,6 +49,7 @@ class UartTerminal(object):
             return 1, read_data  # 'No answer'
 
         self.state = read_data[0]
+        self.error = read_data[1]
         self.set_current = read_data[1] + (read_data[2] << 8)
         # self.real_current = read_data[1] + (read_data[2] << 8)
         self.real_current = read_data[7] + (read_data[8] << 8)

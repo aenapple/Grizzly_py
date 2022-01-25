@@ -31,7 +31,7 @@ if __name__ == '__main__':
     # sys.exit(0)
 
     uartTerminal = UartTerminal()
-    if uartTerminal.open('COM4', 115200) != 0:
+    if uartTerminal.open('COM3', 115200) != 0:
         sys.exit(1)
 
     time.sleep(0.2)
@@ -100,15 +100,16 @@ if __name__ == '__main__':
     cur_evse_state = EVSE_STATE_DISABLED
     timer = 0
     while True:
-        # time.sleep(1.0)
-        time.sleep(60.0)  # 1 minute
+        time.sleep(1.0)
+        # time.sleep(60.0)  # 1 minute
         result, read_data = uartTerminal.read_module(EVSE_CMD_GET_STATE, 0)
         if result > 0:
             print("No answer")
             sys.exit(6)
 
         evse_state = uartTerminal.get_state()
-        evse_set_current = uartTerminal.get_set_current()
+        evse_error = uartTerminal.get_error()
+        """ evse_set_current = uartTerminal.get_set_current()
         evse_real_current = uartTerminal.get_real_current()
         # print(evse_state)
         # print(evse_set_current)
@@ -134,7 +135,7 @@ if __name__ == '__main__':
                 print("Set 20A")
                 timer = 0
 
-        timer += 1
+        timer += 1 """
 
         if evse_state == IFC_EVSE_STATE_STANDBY:
             if cur_evse_state != evse_state:
@@ -169,6 +170,7 @@ if __name__ == '__main__':
         # if evse_state == EVSE_STATE_ERROR
         if cur_evse_state != evse_state:
             print("ERROR")
+            print(evse_error & 0xFF)
             cur_evse_state = evse_state
 
         # result, read_data = uartTerminal.read_module(EVSE_CMD_DISABLE, 0)
