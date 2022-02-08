@@ -85,9 +85,9 @@ class UartTerminal(object):
         if crc != read_data[UART_SIZE_PACKET - 1]:
             return 2, read_data  # 'CRC Error'
 
-        self.command = read_data[UCIP_INDEX_EVSE_CMD]
-        self.state = read_data[UCIP_INDEX_EVSE_CMD]
-        self.error = read_data[1]
+        self.command = read_data[UCIP_INDEX_CMD]
+        self.state = read_data[UCIP_INDEX_CMD]
+        self.error = read_data[UCIP_INDEX_DATA]
         for i in range(UCIP_DATA_SIZE):
             self.rx_data[i] = read_data[i + UCIP_INDEX_DATA]
 
