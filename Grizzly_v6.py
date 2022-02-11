@@ -52,7 +52,7 @@ if __name__ == '__main__':
     # sys.exit(0)
 
     uartTerminal = UartTerminal()
-    if uartTerminal.open('COM5', 115200) != 0:
+    if uartTerminal.open('COM7', 115200) != 0:
         sys.exit(1)
 
     # creat data buffer
@@ -67,6 +67,10 @@ if __name__ == '__main__':
             if result == 2:
                 print("CRC Error")
             continue
+
+        print(read_data)
+        uartTerminal.send_module(UcipCmd_GetCommand, data_buffer)
+        continue
 
         rx_command = uartTerminal.get_command()
         if rx_command == UcipCmd_GetCommand:
