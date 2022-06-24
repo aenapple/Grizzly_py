@@ -2,6 +2,8 @@ import time
 import sys
 from UartTerminal import UartTerminal
 from LogFile import LogFile
+import serial
+import array as buf_array
 
 
 EVSE_CMD_GET_STATE = 0x00
@@ -26,12 +28,30 @@ if __name__ == '__main__':
     __doc__ = """
     ....
     """
-    # print(buffer)
-    # print(len(buffer))
-    # sys.exit(0)
+
+    ComPort = serial.Serial('COM10', 115200, timeout=0.5, parity=serial.PARITY_EVEN)
+    print(ComPort)
+    buffer = buf_array.array('B', [0x7f])
+    while True:
+        ComPort.write(buffer)
+        read_data = ComPort.read(1)
+        if len(read_data) > 0:
+            print(read_data[0])
+            if read_data[0] == 0x79:
+                break
+
+    print('Init Ok')
+
+
+
+
+
+
+    sys.exit(0)
+
 
     uartTerminal = UartTerminal()
-    if uartTerminal.open('COM3', 115200) != 0:
+    if uartTerminal.open('COM10', 115200) != 0:
         sys.exit(1)
 
     time.sleep(0.2)

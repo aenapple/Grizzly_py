@@ -21,10 +21,10 @@ UcipCmd_SendVersion = 0x0D
 UcipCmd_SendSerialNumber = 0x0E
 UcipCmd_GetSerialNumber = 0x0F
 UcipCmd_GetPartitionTable = 0x10
-UcipCmd_GetCommand = 0x11
-UcipCmd_StartUploadUpdateFile = 0x12
+UcipCmd_StartUpdate = 0x11
+UcipCmd_ReadUpdateFile = 0x12
 UcipCmd_GetMaxSizePacket = 0x13
-UcipCmd_SendMaxSizePacket = 0x14
+UcipCmd_Acknowledge = 0xFF
 
 UcipState_NoState = 0x00
 UcipState_SelfTest = 0x01
@@ -52,8 +52,10 @@ if __name__ == '__main__':
     # sys.exit(0)
 
     uartTerminal = UartTerminal()
-    if uartTerminal.open('COM7', 115200) != 0:
+    if uartTerminal.open('COM10', 115200) != 0:
         sys.exit(1)
+
+
 
     # creat data buffer
     data_buffer = buf_array.array('B')
@@ -62,14 +64,15 @@ if __name__ == '__main__':
 
     # waiting start charger
     while True:
+        uartTerminal.send_module(UcipCmd_GetState, data_buffer)
         result, read_data = uartTerminal.read_module()
         if result > 0:
             if result == 2:
                 print("CRC Error")
-            continue
+                continue
 
         print(read_data)
-        uartTerminal.send_module(UcipCmd_GetCommand, data_buffer)
+        # uartTerminal.send_module(UcipCmd_GetCommand, data_buffer)
         continue
 
         rx_command = uartTerminal.get_command()

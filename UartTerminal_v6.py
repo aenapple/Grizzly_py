@@ -4,7 +4,7 @@ import array as buf_array
 # import time
 # from LogFile import LogFile
 
-UART_SIZE_PACKET = 24
+UART_SIZE_PACKET = 32
 
 UCIP_TITLE_SIZE = 2   # 2 bytes - 'G' + 'R'
 UCIP_PACKET_SIZE = 2  # 2 bytes - size packet in bytes
