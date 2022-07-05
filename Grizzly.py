@@ -29,7 +29,7 @@ if __name__ == '__main__':
     ....
     """
 
-    ComPort = serial.Serial('COM10', 115200, timeout=0.5, parity=serial.PARITY_EVEN)
+    """ ComPort = serial.Serial('COM5', 115200, timeout=0.5, parity=serial.PARITY_EVEN)
     print(ComPort)
     buffer = buf_array.array('B', [0x7f])
     while True:
@@ -41,17 +41,11 @@ if __name__ == '__main__':
                 break
 
     print('Init Ok')
-
-
-
-
-
-
-    sys.exit(0)
+    sys.exit(0) """
 
 
     uartTerminal = UartTerminal()
-    if uartTerminal.open('COM10', 115200) != 0:
+    if uartTerminal.open('COM9', 115200) != 0:
         sys.exit(1)
 
     time.sleep(0.2)

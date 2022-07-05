@@ -27,18 +27,20 @@ class UartTerminal(object):
         return self.error
 
     def open(self, com_port, baud_rate):
-        # com_port = 'COM3'
-        # baud_rate = 115200
         try:
             self.ComPort = serial.Serial(com_port, baud_rate, timeout=0.5)
         except serial.SerialException:
             print("Serial Exception:")
             print(sys.exc_info())
             return 1
+
         print(self.ComPort.out_waiting)
         print(self.ComPort.get_settings())
         print(self.ComPort.reset_output_buffer())
         return 0
+
+    def close(self):
+        self.ComPort.close()
 
     def read_module(self, command, current):
         self.send_data(command, current)  # send command to module
