@@ -17,8 +17,7 @@ class LogFile(object):
 
         try:
             full_record = today
-            # str_temp = record[1] + (record[2] << 8)
-            # full_record = full_record + str_temp
+            full_record = full_record + str(record[0]) + ","
             for i in range(7):
                 str_temp = str(record[i*2+1] + (record[i*2+2] << 8))
                 full_record = full_record + str_temp + ","

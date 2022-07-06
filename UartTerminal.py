@@ -1,7 +1,7 @@
 import serial
 import sys
 import array as buf_array
-# import time
+import time
 # from LogFile import LogFile
 
 
@@ -43,8 +43,8 @@ class UartTerminal(object):
         self.ComPort.close()
 
     def read_module(self, command, current):
+        time.sleep(0.1)
         self.send_data(command, current)  # send command to module
-        # time.sleep(0.1)
         read_data = self.ComPort.read(16)
         len_data = len(read_data)
         if len_data == 0:  #
@@ -52,9 +52,9 @@ class UartTerminal(object):
 
         self.state = read_data[0]
         self.error = read_data[1]
-        self.set_current = read_data[1] + (read_data[2] << 8)
+        # self.set_current = read_data[1] + (read_data[2] << 8)
         # self.real_current = read_data[1] + (read_data[2] << 8)
-        self.real_current = read_data[7] + (read_data[8] << 8)
+        # self.real_current = read_data[7] + (read_data[8] << 8)
         # print(read_data[6])
         # print(read_data[7])
 

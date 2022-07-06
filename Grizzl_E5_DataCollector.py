@@ -52,7 +52,6 @@ class Controller(object):
                 return 1
 
         while True:
-            time.sleep(0.2)
             while True:
                 self.result, self.readData = self.uartTerminal.read_module(IFC_EVSE_CMD_GET_STATE, 0)
                 if self.result > 0:
@@ -83,7 +82,6 @@ class Controller(object):
             self.evseState = self.uartTerminal.get_state()
             if self.evseState == IFC_EVSE_STATE_DISABLED:
                 print("SelfTest - OK")
-                time.sleep(0.1)
                 return 0
 
             if self.evseState == IFC_EVSE_STATE_ERROR:
@@ -100,6 +98,29 @@ class Controller(object):
             return 2
 
         return 0
+
+    def start_log(self):
+        log_file = LogFile()
+        while True:
+            time.sleep(9.7)
+
+            self.result, self.readData = self.uartTerminal.read_module(IFC_EVSE_CMD_GET_DATA_1, 0)  # get Data1
+            if self.result > 0:
+                return 1
+            log_file.write_record(self.readData)
+
+            self.result, self.readData = self.uartTerminal.read_module(IFC_EVSE_CMD_GET_DATA_2, 0)  # get Data2
+            if self.result > 0:
+                return 1
+            log_file.write_record(self.readData)
+
+            self.result, self.readData = self.uartTerminal.read_module(IFC_EVSE_CMD_GET_DATA_3, 0)  # get Data3
+            if self.result > 0:
+                return 1
+
+            log_file.write_record(self.readData)
+
+            # return 0
 
 
 if __name__ == '__main__':
@@ -118,8 +139,13 @@ if __name__ == '__main__':
 
         if controller.set_stanby() > 0:
             continue
-        else:
-            sys.exit(0)
+        """ else:
+            sys.exit(0) """
+
+        if controller.start_log() > 0:
+            continue
+
+        sys.exit(0)
 
 
         """ evse_set_current = uartTerminal.get_set_current()
