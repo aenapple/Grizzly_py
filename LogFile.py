@@ -22,6 +22,7 @@ class LogFile(object):
                 str_temp = str(record[i*2+1] + (record[i*2+2] << 8))
                 full_record = full_record + str_temp + ","
 
+            print(full_record)
             full_record = full_record + "\n"
             # str_temp = record.decode()
             # full_record = today + record.replace('temp from '.encode(), '')
