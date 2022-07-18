@@ -125,13 +125,17 @@ class Controller(object):
 
 if __name__ == '__main__':
     __doc__ = """
-    ....
+    args[0] - COM port - example 'COM1'
+    
     """
+    args = sys.argv[1:]
+    com_port = args[0]
+    # baud_rate = args[1]
 
     controller = Controller()
 
     while True:
-        if controller.start('COM9', 115200) > 0:
+        if controller.start(com_port, 115200) > 0:
             sys.exit(1)
 
         if controller.self_test() > 0:

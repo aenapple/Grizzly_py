@@ -32,7 +32,11 @@ class LogFile(object):
             print("ERROR record")
             return
 
-        file_out = open('LogEvse.txt', 'a')
+        """ try:
+            file_read = open('LogFiles\LogEvse.txt', 'r')
+        except: """
+
+        file_out = open('LogFiles\LogEvse.txt', 'a')
         file_out.write(full_record)
         file_out.close()
 

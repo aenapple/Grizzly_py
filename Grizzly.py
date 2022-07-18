@@ -4,6 +4,7 @@ from UartTerminal import UartTerminal
 from LogFile import LogFile
 import serial
 import array as buf_array
+import platform
 
 
 EVSE_CMD_GET_STATE = 0x00
@@ -26,7 +27,7 @@ EVSE_STATE_ERROR = 0x06
 
 if __name__ == '__main__':
     __doc__ = """
-    ....
+    args[0] - COM port 'COM1'
     """
 
     """ ComPort = serial.Serial('COM5', 115200, timeout=0.5, parity=serial.PARITY_EVEN)
@@ -43,6 +44,11 @@ if __name__ == '__main__':
     print('Init Ok')
     sys.exit(0) """
 
+    # args = sys.argv[1:]
+    # print(args[0])
+    system = platform.system()
+    print(system)
+    sys.exit(0)
 
     uartTerminal = UartTerminal()
     if uartTerminal.open('COM9', 115200) != 0:

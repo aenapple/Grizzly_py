@@ -95,7 +95,7 @@ class EvseData(object):
         t_array = []
         s_array = []
 
-        file_input = open('LogEvse.txt', 'r')
+        file_input = open('LogFiles\LogEvse-0715-16.42.txt', 'r')
         # file_csv = open('LogTemperature_' + hex(number_module).replace('0x', '') + '.csv', 'w')
         flag_first_line = True
         for line in file_input:
