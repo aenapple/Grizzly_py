@@ -46,12 +46,12 @@ if __name__ == '__main__':
 
     # args = sys.argv[1:]
     # print(args[0])
-    system = platform.system()
-    print(system)
-    sys.exit(0)
+    # system = platform.system()
+    # print(system)
+    # sys.exit(0)
 
     uartTerminal = UartTerminal()
-    if uartTerminal.open('COM9', 115200) != 0:
+    if uartTerminal.open('COM20', 115200) != 0:
         sys.exit(1)
 
     time.sleep(0.2)

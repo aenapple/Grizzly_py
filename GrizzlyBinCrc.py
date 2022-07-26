@@ -70,8 +70,8 @@ if __name__ == '__main__':
     # print(buffer)
     # print(len(buffer))
     # sys.exit(0)
-
-    str_file_input = 'Grizzly_v5.0.bin'
+    args = sys.argv[1:]
+    str_file_input = args[0]
     file_size = os.stat(str_file_input)
     # print("Size of file :", file_size.st_size, "bytes")
     number_bytes = file_size.st_size

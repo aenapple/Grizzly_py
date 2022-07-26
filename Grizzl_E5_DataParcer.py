@@ -1,13 +1,39 @@
+import sys
+
 import matplotlib.pyplot as plt
+from TSensor import TSensor
 
 EVSE_DATA_DATA1_CODE = 17
 EVSE_DATA_DATA2_CODE = 18
 EVSE_DATA_DATA3_CODE = 19
 
+EVSE_TEMPERATURE_40 = 1881
+EVSE_TEMPERATURE_45 = 2101
+EVSE_TEMPERATURE_50 = 2314
+EVSE_TEMPERATURE_55 = 2516
+EVSE_TEMPERATURE_60 = 2705
+EVSE_TEMPERATURE_65 = 2705
+EVSE_TEMPERATURE_70 = 3032
+EVSE_TEMPERATURE_75 = 3032
+
+# define TASK_MEVSE_TEMP_75_DEG_THR_HIGH	  3205
+# define TASK_MEVSE_TEMP_75_DEG_THR_LOW	  3138
+# define TASK_MEVSE_TEMP_80_DEG_THR_HIGH	  3323
+# define TASK_MEVSE_TEMP_80_DEG_THR_LOW	  3264
+# define TASK_MEVSE_TEMP_85_DEG_THR_HIGH	  3427
+# define TASK_MEVSE_TEMP_85_DEG_THR_LOW	  3375
+# define TASK_MEVSE_TEMP_90_DEG_THR_HIGH	  3518
+# define TASK_MEVSE_TEMP_90_DEG_THR_LOW	  3473
+# define TASK_MEVSE_TEMP_95_DEG_THR_HIGH	  3597
+# define TASK_MEVSE_TEMP_95_DEG_THR_LOW	  3557
+# define TASK_MEVSE_TEMP_100_DEG_THR_HIGH  3664
+# define TASK_MEVSE_TEMP_100_DEG_THR_LOW	  3631
+
 
 class EvseData(object):
     def __init__(self):
         self.seconds = []
+        self.tSensor = TSensor()
         # Data 1:
         self.tRelay = []
         self.pilot = []
@@ -91,12 +117,13 @@ class EvseData(object):
         return self.gfciHigh
 
 
-    def transform_data(self):
+    def transform_data(self, file_path):
         t_array = []
         s_array = []
 
-        file_input = open('LogFiles\LogEvse-0715-16.42.txt', 'r')
+        # file_input = open('LogFiles\LogEvse-0721-16.47.txt', 'r')
         # file_csv = open('LogTemperature_' + hex(number_module).replace('0x', '') + '.csv', 'w')
+        file_input = open(file_path, 'r')
         flag_first_line = True
         for line in file_input:
             # file_csv.write(line[0:10] + ',')
@@ -235,18 +262,29 @@ if __name__ == '__main__':
     __doc__ = """
     ....
     """
+    args = sys.argv[1:]
+    file_input = args[0]
 
     fig, axes = plt.subplots(3, 1)
 
+    t_sensor = TSensor()
     evse_data = EvseData()
-    evse_data.transform_data()
-    plt.ylim(0, 5000)
-    # ax[0].set_xlim(0, 5000)
-    axes[0].plot(evse_data.get_seconds(), evse_data.get_t_relay(), label="TRelay")
-    axes[0].plot(evse_data.get_seconds(), evse_data.get_t_evse(), label="TEvse")
-    axes[0].plot(evse_data.get_seconds(), evse_data.get_t_cpu(), label="TCpu")
-    axes[0].plot(evse_data.get_seconds(), evse_data.get_v_ref(), label="Vref")
+    evse_data.transform_data(file_input)
 
+    t_relay = []
+    t_evse = []
+    for i in range(len(evse_data.get_t_relay())):
+        t_relay.append(t_sensor.get_temperature(evse_data.get_t_relay()[i]))
+        t_evse.append(t_sensor.get_temperature(evse_data.get_t_evse()[i]))
+
+    # plt.ylim(0, 5000)
+    axes[0].set(xlabel='time', ylabel='Celsium', title='Temperature', ylim=(-40, 125))
+    axes[0].plot(evse_data.get_seconds(), t_relay, label="TRelay")
+    axes[0].plot(evse_data.get_seconds(), t_evse, label="TEvse")
+    # axes[0].plot(evse_data.get_seconds(), evse_data.get_t_cpu(), label="TCpu")
+    # axes[0].plot(evse_data.get_seconds(), evse_data.get_v_ref(), label="Vref")
+
+    axes[1].set(xlabel='time', ylabel='adc', title='Evse state', ylim=(0, 5000))
     axes[1].plot(evse_data.get_seconds(), evse_data.get_pilot(), label="Pilot")
     axes[1].plot(evse_data.get_seconds(), evse_data.get_diode(), label= "Diode")
     # axes[1].plot(evse_data.get_seconds(), evse_data.get_line1_detect_gnd(), label="GND-L1")
@@ -254,22 +292,21 @@ if __name__ == '__main__':
     axes[1].plot(evse_data.get_seconds(), evse_data.get_line1_weld_relay(), label="Weld-L1")
     # axes[1].plot(evse_data.get_seconds(), evse_data.get_line2_weld_relay(), label="Weld-L2")
 
-    axes[2].plot(evse_data.get_seconds(), evse_data.get_current_adc(), label="IAC-ADC")
+    """ axes[2].plot(evse_data.get_seconds(), evse_data.get_current_adc(), label="IAC-ADC")
     axes[2].plot(evse_data.get_seconds(), evse_data.get_gfci_adc(), label="GFCI-ADC")
     axes[2].plot(evse_data.get_seconds(), evse_data.get_gfci_base(), label="GFCI-base")
-    axes[2].plot(evse_data.get_seconds(), evse_data.get_current_base(), label="IAC-base")
+    axes[2].plot(evse_data.get_seconds(), evse_data.get_current_base(), label="IAC-base") """
 
+    axes[2].set(xlabel='time', ylabel='mA', title='Evse state', ylim=(0, 65000))
+    axes[2].plot(evse_data.get_seconds(), evse_data.get_current_ma(), label="Current mA")
 
-    axes[0].set(xlabel='time', ylabel='adc', title='Evse state', ylim=(0, 4200))
     axes[0].grid(True)
     axes[0].legend(loc='upper left')
-    axes[1].set(xlabel='time', ylabel='adc')
     axes[1].grid(True)
     axes[1].legend(loc='upper left')
-    axes[2].set(xlabel='time', ylabel='adc')
     axes[2].grid(True)
     axes[2].legend(loc='upper left')
     # plt.legend()
     plt.show()
 
-    print("OK")
+    # print("OK")
