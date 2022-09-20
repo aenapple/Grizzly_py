@@ -70,8 +70,9 @@ if __name__ == '__main__':
     # print(buffer)
     # print(len(buffer))
     # sys.exit(0)
-    args = sys.argv[1:]
-    str_file_input = args[0]
+    # args = sys.argv[1:]
+    # str_file_input = args[0]
+    str_file_input = 'Grizzl_E5_stm730.bin'
     file_size = os.stat(str_file_input)
     # print("Size of file :", file_size.st_size, "bytes")
     number_bytes = file_size.st_size
@@ -143,10 +144,16 @@ if __name__ == '__main__':
     file_read = file_input.read(number_bytes)
     file_output.write(file_read)
 
+    add_number_bytes = number_bytes % 8
+    if add_number_bytes > 0:
+        add_number_bytes = 8 - add_number_bytes
+        for i in range(add_number_bytes):
+            file_output.write(bytes([255]))
+
     file_input.close()
     file_output.close()
 
-    os.remove(str_file_input)
-    os.rename(str_file_output, str_file_input)
+    # os.remove(str_file_input)
+    # os.rename(str_file_output, str_file_input)
 
 

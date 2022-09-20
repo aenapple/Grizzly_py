@@ -28,7 +28,7 @@ class UartTerminal(object):
 
     def open(self, com_port, baud_rate):
         try:
-            self.ComPort = serial.Serial(com_port, baud_rate, timeout=0.5)
+            self.ComPort = serial.Serial(com_port, baud_rate, timeout=0.5, parity=serial.PARITY_EVEN)
         except serial.SerialException:
             print("Serial Exception:")
             print(sys.exc_info())

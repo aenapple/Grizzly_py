@@ -30,10 +30,11 @@ if __name__ == '__main__':
     args[0] - COM port 'COM1'
     """
 
-    """ ComPort = serial.Serial('COM5', 115200, timeout=0.5, parity=serial.PARITY_EVEN)
+    ComPort = serial.Serial('COM21', 19200, timeout=0.5, parity=serial.PARITY_EVEN)
     print(ComPort)
     buffer = buf_array.array('B', [0x7f])
     while True:
+        time.sleep(0.1)
         ComPort.write(buffer)
         read_data = ComPort.read(1)
         if len(read_data) > 0:
@@ -41,8 +42,9 @@ if __name__ == '__main__':
             if read_data[0] == 0x79:
                 break
 
+    ComPort.close()
     print('Init Ok')
-    sys.exit(0) """
+    sys.exit(0)
 
     # args = sys.argv[1:]
     # print(args[0])
